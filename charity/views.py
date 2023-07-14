@@ -30,7 +30,6 @@ class AddDonation(LoginRequiredMixin, View):
         categories = Category.objects.all()
         institutions = Institution.objects.all()
 
-        # return TemplateResponse(request, 'form.html')
         return render(request, 'form.html', context={"categories": categories, "institutions": institutions})
 
 
