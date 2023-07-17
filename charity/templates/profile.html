@@ -10,4 +10,14 @@
         <li>email: {{ user.email }}</li>
     </ul>
     </section>
+        <section id="donations" class="login-page">
+      <h2>Przekazane przez Ciebie dary</h2>
+    <ul>
+        {% for donation in donations %}
+        <li>{{ donation.quantity }} worków dla organizacji {{ donation.institution }}
+            z kategorii {% for category in donation.categories.all %} {{ category.name }} {% endfor %}
+        przekazano {{ donation.pick_up_date }}</li>
+        {% endfor %}
+    </ul>
+    </section>
 {% endblock content %}
