@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<p>Edytuj profil</p>
+    <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+
+    </form>
+    <div><a href="{% url 'password_change' %}?next={% url 'index' %}">Zmień hasło</a></div>
+
+{% endblock %}
