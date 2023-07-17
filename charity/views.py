@@ -3,7 +3,9 @@ from django.views import View
 from django.template.response import TemplateResponse
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
 from .models import Institution, Donation, Category
 from .forms import RegisterUserForm, LoginForm
 
@@ -31,6 +33,8 @@ class AddDonation(LoginRequiredMixin, View):
         institutions = Institution.objects.all()
 
         return render(request, 'form.html', context={"categories": categories, "institutions": institutions})
+
+    # def post(self, request):
 
 
 class Login(View):
@@ -88,6 +92,17 @@ class Profile(View):
 
     def get(self, request):
         user = User.objects.get(id=self.request.user.id)
-        return render(request, 'profile.html', context={'user': user})
+        donations = Donation.objects.filter(user_id=self.request.user.id)
+        categories = Category.objects.all()
+        return render(request, 'profile.html', context={'user': user, 'donations': donations, 'categories': categories})
 
+
+class UpdateProfile(LoginRequiredMixin, UpdateView):
+    model = User
+    success_url = reverse_lazy('index')
+    fields = ['first_name', 'last_name']
+    template_name_suffix = '_update_form'
+
+    # def test_func(self):
+    #   password
 
