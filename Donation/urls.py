@@ -17,17 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from charity.views import LandingPage, AddDonation, Login, Register, Profile
+from charity.views import LandingPage, AddDonation, Login, Register, Profile, UpdateProfile
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPage.as_view(), name="index"),
     path('accounts/', include("django.contrib.auth.urls")),
-    # path('accounts/logout/', auth_views.LogoutView.as_view(next_page="index")),
     path('add_donation', AddDonation.as_view(), name="add_donation"),
     path('login/', Login.as_view(), name="login"),
     path('register', Register.as_view(), name="register"),
-    path('profile', Profile.as_view(), name='profile')
+    path('profile', Profile.as_view(), name='profile'),
+    path('update_profile/<int:pk>', UpdateProfile.as_view(), name='update_profile')
 ]
 
